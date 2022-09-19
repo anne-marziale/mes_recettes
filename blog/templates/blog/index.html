@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+
+    {% for recette in recettes %}
+        <article>
+            <header>
+                <img class="imgRecette" src="{% static 'img/' %}{{recette.photo}}" width="300px" height="242px" alt="Tartiflette" />
+                <a href="{% url 'recette' recette.id %}">
+                    <h1 class="titreRecette">
+                        {{recette.titre}}
+                    </h1>
+                </a>
+                <time>
+                    {{recette.date_parution}}
+                </time>
+            </header>
+            <p>
+                {{recette.description}}
+            </p>
+        </article>
+        <hr />
+    {% endfor %}
+
+{% endblock %}

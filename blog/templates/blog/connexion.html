@@ -1,0 +1,41 @@
+{% extends "blog/base.html" %} 
+
+{% load static %} 
+
+{% block content %}
+
+<h1>Connexion</h1>
+<div id="connexion">
+    <form method="post" action="{% url 'connexion' %}"novalidate >
+        {% csrf_token %}
+        <div>
+            {{ form.pseudo.errors }}
+            <label for="{{ form.pseudo.id_for_label }}">  Pseudo :</label>
+            {{ form.pseudo }}
+        </div>
+        <div>
+            {{ form.mdp.errors }}
+            <label for="{{ form.mdp.id_for_label }}">  Mot de passe :</label>
+            {{ form.mdp }}
+        </div>
+        <input type="submit" value="Connexion" class="submitBtn" /><br />
+    </form>
+</div>
+<div id="erreur">
+    <p> 
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                        <div>{{field.label}} : {{error|escape}}</div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div>{{error|escape}}</div>
+            {% endfor %}
+        {% endif %}
+    </p>
+</div>
+
+{% endblock %}

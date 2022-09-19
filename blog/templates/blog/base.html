@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>{% block title %}Mon blog de recettes{% endblock %}</title>
+</head>
+
+<body>
+    <header>
+        <a href="index">
+            <h1 id="titreBlog">Mon Blog de Recettes</h1>
+        </a>
+        <div style="width:300px;margin:20px auto;">Bienvenue sur mon blog de recettes</div>
+        <nav id="loginBar">
+            {% if member %}
+            <div>
+                Bonjour {{member.pseudo}}
+            </div>
+            <div class="login">
+                <a class="primaryBtn login" href="{% url 'deconnexion' %}">Deconnexion</a>
+            </div>
+            {% else %}
+            <div class="login">
+                <a class="primaryBtn login" href="{% url 'inscription' %}">Inscription</a>
+            </div>
+            <div class="login">
+                <a class="primaryBtn login" href="{% url 'connexion' %}">Connexion</a>
+            </div>
+            {% endif %}
+        </nav>
+    </header>
+        <div id="global">
+            {% block categorie_nav %}
+            <div id="categorie">
+                <ul>
+                    {% for categorie in categories %}
+                        <li {% if categorie_selected.id == categorie.id %}class="selected"{% endif %}>
+                            <a href="{% url 'categorie' categorie.id %}">{{categorie.nom}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endblock %}
+
+            {% block content %}{% endblock %}
+        </div>
+    <footer>
+        Blog réalisé par Anne
+    </footer>
+</body>
+</html>

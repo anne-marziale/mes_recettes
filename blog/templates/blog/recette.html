@@ -1,0 +1,63 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+        <article>
+            <header>
+                <img class="imgRecette" src="{% static 'img/' %}{{recette.photo}}" alt="Tartiflette" />
+                <h1 class="titreRecette">
+                    {{recette.titre}}
+                </h1>
+                <span class="fa fa-star {% if note > 1 %} checked {% endif %}"></span>
+                <span class="fa fa-star {% if note > 1 %} checked {% endif %}"></span>
+                <span class="fa fa-star {% if note > 1 %} checked {% endif %}"></span>
+                <span class="fa fa-star {% if note > 1 %} checked {% endif %}"></span>
+                <span class="fa fa-star"></span>
+                </br>
+                <time>
+                    {{recette.date_parution}}
+                </time>
+            </header>
+            <p>
+                {{recette.description}}
+            </p>
+        </article>
+        <hr />
+        <header>
+            <h2 id="titreIngredient">
+                Ingrédients
+            </h2>
+            <ul>
+                {% for ingredient in ingredients %}
+                        <li>
+                            {{ ingredient.nom }} {{ ingredient.quantite }} {{ ingredient.unit }}
+                        </li>
+                    {% endfor %}
+            </ul>
+        </header>
+        <h2 id="titreCommentaire">
+            Commentaires
+        </h2>
+        <div class="divCommentaire">
+            {% for commentaire in commentaires %}
+
+            <p> {{ commentaire.auteur }} : {{ commentaire.contenu }}</p>
+            <p>Note : {{ commentaire.note }}/5</p>
+            <p>{{ commentaire.date_creation }}</p>
+
+        {% endfor %}
+            <hr>
+        </div>
+        
+        <form method="post" action="{% url "recette" recette.id %}">
+            {% csrf_token %}
+            {{form.as_p}}
+            <br />
+            <input type="submit" value="Commenter" class="submitBtn" />
+        </form>
+        <div id="erreur">
+            <p> Erreurs </p>
+        </div>
+
+
+{% endblock %}

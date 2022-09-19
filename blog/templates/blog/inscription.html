@@ -1,0 +1,58 @@
+{% extends "blog/base.html" %} 
+
+{% load static %} 
+
+{% block content %}
+
+<h1>Inscription</h1>
+<div id="inscription">
+    <form method="post" action="{% url 'inscription' %}"novalidate >
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div>
+            {{ form.nom.errors }}
+            <label for="{{ form.nom.id_for_label}}">Nom :</label>
+            {{ form.nom }}
+        </div>
+        <div>
+            {{ form.pseudo.errors }}
+            <label for="{{ form.pseudo.id_for_label}}"> Pseudo :</label>
+            {{ form.pseudo }}
+        </div>
+        <div>
+            {{ form.email.errors }}
+            <label for="{{ form.email.id_for_label}}"> Email :</label>
+            {{ form.email }}
+        </div>
+        <div>
+            {{ form.mdp.errors }}
+            <label for="{{ form.mdp.id_for_label}}"> Mot de passe :</label>
+            {{ form.mdp }}
+        </div>
+        <div>
+            {{ form.conf_mdp.errors }}
+            <label for="{{ form.conf_mdp.id_for_label}}"> Confirmation du mot de passe :</label>
+            {{ form.conf_mdp }}
+        </div>
+        <input type="submit" value="Je 'm'inscris" class="submitBtn" /><br />
+    </form>
+</div>
+<div id="erreur">
+    <p> 
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                        <div>{{field.label}} : {{error|escape}}</div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div>{{error|escape}}</div>
+            {% endfor %}
+        {% endif %}
+
+    </p>
+</div>
+
+{% endblock %}
